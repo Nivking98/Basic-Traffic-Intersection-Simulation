@@ -1,0 +1,79 @@
+def algo2(lanes, total_vehicles,camera,cycle):
+    print("Density based Algo")
+
+    if camera == "A1A2":
+        densityA = total_vehicles//lanes
+        print(densityA)
+        categoryA = {
+            "low" : 4,
+            "medium" : 6,
+            "high" : 8
+        }
+        if densityA < categoryA["low"]:
+            weight = 0.25
+        elif densityA > categoryA["low"] and densityA < categoryA["medium"]:
+            weight = 0.5
+        elif densityA > categoryA["medium"] and densityA < categoryA["high"]:
+            weight = 0.75
+        else:
+            weight = 1
+
+    elif camera == "B1B2":
+        densityB = total_vehicles//lanes
+        categoryB = {
+            "low" : 2,
+            "medium" : 3,
+            "high" : 5
+        }
+        if densityB < categoryB["low"]:
+            weight = 0.25
+        elif densityB > categoryB["low"] and densityB < categoryB["medium"]:
+            weight = 0.5
+        elif densityB > categoryB["medium"] and densityB < categoryB["high"]:
+            weight = 0.75
+        else:
+            weight = 1
+
+    time = weight * Max_times[camera]
+    print("time: " , time, "s")
+    return time
+    #Density categorization: truck,bus,car,bike : bigger vehicle*number more density in queue: more time (3D)
+    #// lane# -> higher density (higher weight category)
+    #Time is int so at all times ensure time is int and not float hence why // used and specific max times and categorized weights used
+    #calculate_green_time(camera, cycle, weight)
+
+#Time based Algorithm - weights for A1A2 B1B2 3D [total_veh_type,lanes,avgtime] with summation
+#weight categorization
+#equation of motion queuelength = 0.5 * avgaccel * t² 
+#Example calc for avg_timetocross, t = sqrt((2*queuelength)/avgaccel).
+#Weight = sum(veh_type * avg_timetocross)/#lanes+1
+#A1A2_queuelength = 50
+#B1B2_queuelength = 30
+#returns the time itself which may surpass the orignal maxGT for A and B to allow for more complexity in design to meet the needs of the current traffic situation
+#Based on equation limitting factors must be established to ensure this value isn't too high but priority should always go to highways over minor streets
+def algo3(lanes, cars, busses, trucks, motorcycles,camera,cycle):
+    print("Time based Algo")
+    if camera == "A1A2":
+        A1A2_avg_ttc = {
+            "car" : 3.87,
+            "bus" : 5.00,
+            "truck" : 6.08,
+            "motorcycle" : 2.29
+        }
+
+        A1A2_sum = math.floor(cars*A1A2_avg_ttc["car"] + busses*A1A2_avg_ttc["bus"] + trucks*A1A2_avg_ttc["truck"] + motorcycles*A1A2_avg_ttc["motorcycle"])
+        GST = A1A2_sum//(lanes+1)
+
+    if camera == "B1B2":
+        B1B2_avg_ttc = {
+            "car" : 3.01,
+            "bus" : 3.87,
+            "truck" : 4.71,
+            "motorcycle" : 1.75
+        }
+
+        B1B2_sum = math.floor(cars*B1B2_avg_ttc["car"] + busses*B1B2_avg_ttc["bus"] + trucks*B1B2_avg_ttc["truck"] + motorcycles*B1B2_avg_ttc["motorcycle"])
+        GST = B1B2_sum//(lanes+1)
+
+    print("time: " , GST, "s")
+    return GST
