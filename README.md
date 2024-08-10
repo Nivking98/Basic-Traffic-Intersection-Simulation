@@ -7,3 +7,5 @@ Accuracy of simulation can be fine tuned by editing speed of vehicles in pixels/
 Further improvements(1) to this simulation would be turning like in original code and also one key idea is to automate the process of intersection and vehicluar speed by giving the user a GUI to interact with to directly alter these parameters based on predefined choices or users personal design choices.
 
 Further improvements(2)  to the adaptive signal light system itself to meet objectives would be the inclusion of algorithm to detect specifically emergency vehicles and assign priority to that intersection side for safety and emergency as well as detect accidents on the intersection side itself.
+
+[ECNG 3020 Presentati.pdf](https://github.com/user-attachments/files/16570415/ECNG.3020.Presentati.pdf)
